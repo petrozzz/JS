@@ -1,85 +1,39 @@
 console.clear();
 myMain();
+console.log('finish');
 
 function myMain(){
-   console.log("Test myGetMax");
-   let res = "BAD";
-   (myGetMax(1, 1) === 0) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";
-   (myGetMax(1, 2) === -1) && (res = "GOOD");
-   console.log(res); 
-   res = "BAD";
-   (myGetMax(2, 1) === 1) && (res = "GOOD");
-   console.log(res);
+   try{
+      doTest(myGetMax, [[1, 1], [1,2], [2,1]], [0, -1, 1]);
+      doTest(myFactorial, [[1], [3], [5]], [1, 6, 120]);
+      doTest(myConcat, [[1,2,3], ['1','2','3'], ['a', 'b', ' ']],['123', '123', 'ab ']);
+      doTest(myRectArea, [[3,4], [3], [5]],[12, 9, 25]);
+      doTest(isPerfectNumber, [[10], [6], [33550336]],[false, true, true]);
+
+      console.log("Test showPerfectNumber");
+      showPerfectNumber(1, 10000);
+
+      console.log("Test showTime");   
+      showTime(12,0,0);
    
-   console.log("Test myGetMax");
-   res = "BAD";
-   (myFactorial(1) === 1) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";
-   (myFactorial(3) === 6) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";
-   (myFactorial(5) === 120) && (res = "GOOD");
-   console.log(res);
-   
-   console.log("Test myConcat");
-   res = "BAD";
-   (myConcat(1,2,3) === "123") && (res = "GOOD");
-   console.log(res);
-   res = "BAD";
-   (myConcat("1","2","3") === "123") && (res = "GOOD");
-   console.log(res);
-   
-   console.log("Test myRectArea");
-   res = "BAD";
-   (myRectArea(3,4) === 12) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (myRectArea(3) === 9) && (res = "GOOD");
-   console.log(res);
+      doTest(timeToSeconds, [[1, 1, 40], [0, 0, 40], [0, 1, 40]],[3700, 40, 100]);
+      doTest(secondsToTime, [[3700], [40], [100]],['01:01:40', '00:00:40', '00:01:40']);
+      doTest(diffTime, [[12,0,0,13,0,0], [12,0,0,12,30,15], [12,0,0,12,30,16]],
+         ['01:00:00', '00:30:15', '00:30:16']);   
+   } catch(Error){
+      console.log(Error.message);
+   }   
+}
 
-   console.log("Test isPerfectNumber");
-   res = "BAD";
-   (isPerfectNumber(10) === false) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (isPerfectNumber(6) === true) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (isPerfectNumber(33550336) === true) && (res = "GOOD");
-   console.log(res);
-
-   console.log("Test showPerfectNumber");
-   showPerfectNumber(1, 10000);
-
-   console.log("Test showTime");   
-   showTime(12,0,0);
-
-   console.log("Test timeToSeconds");
-   res = "BAD";   
-   (timeToSeconds(1, 1, 40) === 3700) && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (timeToSeconds(0, 0, 40) === 40) && (res = "GOOD");
-   console.log(res);
-
-   console.log("Test secondsToTime");
-   res = "BAD";   
-   (secondsToTime(3700) === "01:01:40") && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (secondsToTime(40) === "00:00:40") && (res = "GOOD");
-   console.log(res);
-
-   console.log("Test diffTime");
-   res = "BAD";   
-   (diffTime(12,0,0,13,0,0) === "01:00:00") && (res = "GOOD");
-   console.log(res);
-   res = "BAD";   
-   (diffTime(12,0,0,12,30,15) === "00:30:15") && (res = "GOOD");
-   console.log(res);
+function doTest(funName, list_args, list_result){
+   if (typeof(funName) !== 'function') 
+      throw(new Error("The funName must be a function."));
+   if (list_args.length !== list_result.length)
+      throw(new Error("The length of list_args and list_result must be equal."));
+   console.log('Test ' + funName.name);
+   list_result.forEach((res, id) => {
+      console.log((funName.apply(this, list_args[id]) === res)? 'GOOD': 'BAD');      
+   });    
 }
 
 function myGetMax(a, b){
@@ -144,7 +98,45 @@ function secondsToTime(a){
 }
 
 function diffTime(h1, m1, s1, h2, m2, s2){
-    let secs1 = timeToSeconds(h1,m1,s1);
-    let secs2 = timeToSeconds(h2,m2,s2);
-    return secondsToTime(Math.abs(secs2 - secs1));
+   let secs1 = timeToSeconds(h1,m1,s1);
+   let secs2 = timeToSeconds(h2,m2,s2);
+   return secondsToTime(Math.abs(secs2 - secs1));
+}
+
+function myRecrusionCopy(ar1){
+   let ar = [];
+   for(let k in ar1){
+      if(typeof(ar1[k]) == 'object'){
+         ar[k] = myRecrusionCopy(ar1[k]);
+      } else {
+         ar[k] = ar1[k];
+      }
+   }
+   return ar;
+}
+
+function myRecursionNOD(a, b){
+   if (a > b)
+      return myRecursionNOD(a - b, b);   
+   if (a < b)
+      return myRecursionNOD(a, b - a);
+   return a; 
+}
+
+function myRecursionMaxDigit(n, max = 0){
+   n = Math.abs(n);
+   if(n > 0){
+      val = n % 10;
+      return myRecursionMaxDigit(Math.floor(n/10), (max < val)? val : max);
+   } 
+   return max;   
+}
+
+function myRecursionIsSimple(n, val = Math.floor(n/2)){
+   if(val == 1)
+      return true;
+   if(!(n % val))
+      myRecursionIsSimple(n, --val);
+   else
+      return false;
 }
