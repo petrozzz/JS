@@ -23,6 +23,8 @@ function myMain(){
    } catch(Error){
       console.log(Error.message);
    }   
+
+   
 }
 
 function doTest(funName, list_args, list_result){
@@ -133,10 +135,32 @@ function myRecursionMaxDigit(n, max = 0){
 }
 
 function myRecursionIsSimple(n, val = Math.floor(n/2)){
-   if(val == 1)
+   if(n == 1 || val == 1)
       return true;
-   if(!(n % val))
-      myRecursionIsSimple(n, --val);
+   if((n % val) !== 0)
+      return myRecursionIsSimple(n, --val);
    else
       return false;
+}
+
+function myRecursionProducts(n, n0 = n, val = 2, res = ""){
+   if(n == 1 || val >= n0/2)
+      return (res.length > 0)? res.substring(0, res.length - 1): String(n);
+   if((n % val) === 0)
+      return myRecursionProducts(n/val, n0, val, res += val + "*");
+   else{
+      do{
+         val++;
+      } while ((val < n0/2) && (n % val) !== 0)
+         if((n % val) === 0) 
+            return myRecursionProducts(n/val, n0, val, res += val + "*");
+         else 
+            return (res.length > 0)? res.substring(0, res.length - 1): String(n);
+   }
+}
+
+function myRecursionFibonachi(n){
+  if(n < 0) return 0;
+  if(n < 2) return 1;
+  return myRecursionFibonachi(n-1) + myRecursionFibonachi(n - 2);
 }
