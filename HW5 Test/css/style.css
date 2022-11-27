@@ -1,0 +1,26 @@
+*{
+   margin: 0;
+   padding: 0;   
+}
+
+body{
+   margin: 10px auto;   
+   width: 600px;
+}
+
+.box{
+   margin: 2px;
+   border: solid 1px black;
+   /*border-radius: 2px;*/
+   background-color: cornflowerblue;
+   padding-top: 5px;
+   padding-left: 10px;
+}
+
+.button{
+   border: none;   
+}
+
+.main-container{  
+   min-height: 200px;   
+}
