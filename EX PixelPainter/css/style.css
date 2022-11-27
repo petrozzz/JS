@@ -1,0 +1,86 @@
+*{
+   margin: 0;
+   padding: 0;
+}
+
+body{
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+}
+
+.box{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   
+   margin: 2px;
+   /*min-height: 100px*/;
+   /*min-width: 100px;*/
+   width: 600px;
+   border: solid 1px black;
+}
+
+.menu{
+   width: 98.5%;
+   flex-direction: row;
+   height: 40px;
+}
+
+.btn{
+   width: 20px;
+   height: 20px;
+   margin: 10px;
+   border: solid 1px black;
+   border-radius: 15px;
+}
+
+.field{
+   width: 400px;
+   height: 400px;
+   flex-direction: row;
+   justify-content: start;
+   align-items: start;
+   flex-wrap: wrap;
+}
+
+.black{
+   background-color: black;
+}
+
+.white{
+   background-color: white;
+}
+
+.red{
+   background-color: red;
+}
+
+.green{
+   background-color: green;
+}
+
+.blue{
+   background-color: blue;
+}
+
+.yellow{
+   background-color: yellow;
+}
+
+.clear{
+   background-image: url("../image/refresh.svg");
+}
+
+.cell{
+   width: 18px;
+   height: 18px;
+   margin: 0px;
+   border-color: cadetblue;
+}
+
+.cheked{
+   width: 23px;
+   height: 23px;
+}
