@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Projects</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1d3557, #0b1320 55%, #000 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1180px;
+      padding: 32px 20px 40px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 2.2rem + 0.5vw, 2.6rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #cbd5f5;
+      max-width: 640px;
+      line-height: 1.5;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #a5b4fc;
+      margin-bottom: 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      position: relative;
+      border-radius: 16px;
+      padding: 16px 16px 18px;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.7));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.65),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.28), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(129, 140, 248, 0.9);
+      box-shadow:
+        0 26px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(30, 64, 175, 0.85);
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.82));
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 1.02rem;
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      opacity: 0.82;
+      line-height: 1.5;
+      min-height: 2.4em;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .card-path {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.75rem;
+      opacity: 0.7;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #e5f3ff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+    }
+
+    .card-button span {
+      font-size: 1.05em;
+    }
+
+    .card-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 1);
+    }
+
+    .card-button:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.95);
+      filter: brightness(0.97);
+    }
+
+    footer {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      opacity: 0.6;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    footer code {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding-inline: 16px;
+      }
+
+      .card {
+        padding-inline: 14px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title-row">
+        <h1>JS Projects</h1>
+        <div class="subtitle">GitHub Pages · учебные работы</div>
+      </div>
+      <p class="note">
+        Нажми на любую карточку, чтобы открыть соответствующий проект).
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <div class="section-title">Домашние задания</div>
+        <div class="grid">
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW1 · Базовое задание</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Стартовый проект по JavaScript: базовая разметка, скрипты и стили.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW1/index.html</div>
+              <a class="card-button" href="HW1/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · BookShop</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Макет интернет-магазина книг: работа с формами, данными и стилями.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 BookShop/index.html</div>
+              <a class="card-button" href="HW5%20BookShop/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · Forum Messanger</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Прототип форума/мессенджера с полями ввода и отправкой сообщений.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 Forum Messanger/index.html</div>
+              <a class="card-button" href="HW5%20Forum%20Messanger/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · KassirRU</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Страница в стиле билетного сервиса: работа с формами и отправкой.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 KassirRU/index.html</div>
+              <a class="card-button" href="HW5%20KassirRU/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · Test</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Тестовое задание/опрос: взаимодействие с пользователем через форму.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 Test/index.html</div>
+              <a class="card-button" href="HW5%20Test/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · TextStyle</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Работа со стилями текста и динамическими эффектами оформления.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 TextStyle/index.html</div>
+              <a class="card-button" href="HW5%20TextStyle/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">HW5 · WhoIsAbsentToday</div>
+              <div class="card-tag">HW</div>
+            </div>
+            <div class="card-desc">
+              Небольшое приложение для работы со списком/посещаемостью.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/HW5 WhoIsAbsentToday/index.html</div>
+              <a class="card-button" href="HW5%20WhoIsAbsentToday/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Примеры и эксперименты</div>
+        <div class="grid">
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">EX · FormRegist</div>
+              <div class="card-tag">EXAMPLE</div>
+            </div>
+            <div class="card-desc">
+              Эксперимент с формой регистрации: вёрстка, валидация и отправка данных.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/EX FormRegist/index.html</div>
+              <a class="card-button" href="EX%20FormRegist/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div class="card-title">EX · PixelPainter</div>
+              <div class="card-tag">EXAMPLE</div>
+            </div>
+            <div class="card-desc">
+              Небольшой «пиксельный редактор» для рисования в сетке.
+            </div>
+            <div class="card-footer">
+              <div class="card-path">/EX PixelPainter/index.html</div>
+              <a class="card-button" href="EX%20PixelPainter/" target="_blank" rel="noopener noreferrer">
+                <span>Открыть</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>Все ссылки ведут на <code>index.html</code> каждой папки.</div>
+    </footer>
+  </div>
+</body>
+</html>
+
