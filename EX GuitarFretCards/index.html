@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar Fret Cards</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <h1>Карточки нот на грифе</h1>
+      <p class="subtitle">6 струн, стандартный строй (E A D G B E), лады I-XII</p>
+    </header>
+
+    <section class="controls">
+      <label class="mode">
+        Режим:
+        <select id="modeSelect">
+          <option value="noteToFret">Нота -> лад</option>
+          <option value="fretToNote">Лад -> нота</option>
+        </select>
+      </label>
+      <div class="buttons-top">
+        <button id="newRoundBtn" type="button">Новый раунд</button>
+        <button id="resetStatsBtn" type="button" class="ghost">Сбросить статистику</button>
+      </div>
+    </section>
+
+    <section class="card-zone">
+      <div class="hint">Подумай ответ, затем нажми на карточку для переворота</div>
+      <article class="card" id="card">
+        <div class="face face-front">
+          <div class="label">Вопрос</div>
+          <div id="frontText" class="value">-</div>
+        </div>
+        <div class="face face-back">
+          <div class="label">Ответ</div>
+          <div id="backText" class="value">-</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="actions">
+      <button id="knowBtn" type="button" class="know" disabled>Знаю</button>
+      <button id="dontKnowBtn" type="button" class="dont-know" disabled>Не знаю</button>
+    </section>
+
+    <section class="stats">
+      <h2>Статистика</h2>
+      <div class="stats-grid">
+        <div class="stat"><span>Попыток:</span><strong id="totalStat">0</strong></div>
+        <div class="stat"><span>Знаю:</span><strong id="knowStat">0</strong></div>
+        <div class="stat"><span>Не знаю:</span><strong id="dontKnowStat">0</strong></div>
+        <div class="stat"><span>Точность:</span><strong id="accuracyStat">0%</strong></div>
+      </div>
+      <p class="stats-note" id="roundProgressNote">Карточка: 0 / 42</p>
+      <p class="stats-note" id="roundTimeNote">Время раунда: 00:00</p>
+      <p class="stats-note" id="modeStatsNote">Режим: Нота -> лад</p>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
