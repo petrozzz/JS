@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моделирование капельного дисплея</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Капельный дисплей</h1>
+      <p class="subtitle">
+        Сопла в ряд: вылет по строкам растра снизу вверх — на одной строке все точки (вся перемычка H) разом; шаг Δτ между строками. Строб подсвечивает полосу.
+      </p>
+    </header>
+
+    <div class="stage">
+      <canvas id="canvas" width="400" height="400" aria-label="Симуляция капель"></canvas>
+      <div class="preview-wrap" aria-hidden="true">
+        <span class="preview-label">Эталон текста</span>
+        <canvas id="previewCanvas" width="120" height="48"></canvas>
+      </div>
+    </div>
+
+    <p class="physics-hud" id="physicsHud" aria-live="polite">
+      Кадр: снизу вверх по строкам матрицы; на строке все сопла синхронно. <code>y = y₀ + ½g(t−τ)²</code>.
+    </p>
+
+    <div class="controls">
+      <div class="row">
+        <label class="grow">
+          Текст
+          <input type="text" id="textInput" placeholder="Введите текст…" value="HI" maxlength="8" autocomplete="off">
+        </label>
+        <button type="button" id="updateBtn">Обновить</button>
+      </div>
+      <label>
+        Скорость падения (g)
+        <input type="range" id="gravitySlider" min="0.1" max="2" step="0.01" value="1">
+        <span class="value" id="gravityValue">1.00</span>
+      </label>
+      <label>
+        Шаг между строками растра Δτ (мс)
+        <input type="range" id="dropSpacingSlider" min="12" max="120" step="2" value="48">
+        <span class="value" id="dropSpacingValue">48</span>
+      </label>
+      <label>
+        Пауза между кадрами (мс)
+        <input type="range" id="framePauseSlider" min="150" max="2000" step="50" value="500">
+        <span class="value" id="framePauseValue">500</span>
+      </label>
+      <label>
+        Яркость вне зоны
+        <input type="range" id="fadeSlider" min="0" max="1" step="0.01" value="0.2">
+        <span class="value" id="fadeValue">0.20</span>
+      </label>
+      <label>
+        Высота зоны подсветки (px)
+        <input type="range" id="zoneHeightSlider" min="20" max="120" step="2" value="56">
+        <span class="value" id="zoneHeightValue">56</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="strobeCheck" checked>
+        Стробоскопический эффект (зона подсветки)
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="trailsCheck">
+        Режим «длинной выдержки» (следы)
+      </label>
+    </div>
+  </main>
+  <script src="js/script.js"></script>
+</body>
+</html>
